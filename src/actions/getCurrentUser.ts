@@ -9,13 +9,14 @@ export const getSession = async () => {
 const getCurrentUser = async () => {
     try {
         const session = await getSession();
-
+        // @ts-ignore
         if (!session?.user?.email) {
             return null;
         }
 
         const currentUser = await prisma.user.findUnique({
             where: {
+                // @ts-ignore
                 email: session.user.email as string,
             }
         });

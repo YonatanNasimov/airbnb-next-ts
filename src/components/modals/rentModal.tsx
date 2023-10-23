@@ -8,6 +8,7 @@ import { categories } from '../navbar/categories';
 import CategoryInput from '../inputs/categoryInput';
 import { FieldValues, useForm } from 'react-hook-form';
 import CountrySelect from '../inputs/countrySelect';
+import Map from '../map';
 
 enum STEPS {
     CATEGORY = 0,
@@ -45,7 +46,8 @@ const RentModal = () => {
     })
 
     const category = watch('category'); // watch on field 'category'
-
+    const location = watch('location'); // watch on field 'location'
+    console.log(location);
     const setCustomValues = (id: string, value: any) => {
         setValue(id, value, {
             shouldValidate: true,
@@ -105,9 +107,10 @@ const RentModal = () => {
                     subTitle="Help guests find you!"
                 />
                 <CountrySelect
-                    // value={location}
-                    // onChange={(value) => setCustomValues('location', value)}
+                    value={location}
+                    onChange={(value) => setCustomValues('location', value)}
                 />
+                <Map center={location.latlng} />
             </div>
         )
     }
@@ -123,7 +126,6 @@ const RentModal = () => {
                 secondaryAction={step == STEPS.CATEGORY ? undefined : onBack}
                 title='Airbnb your home!'
                 body={bodyContent} />
-
         </div>
     )
 }
