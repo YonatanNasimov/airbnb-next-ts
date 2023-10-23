@@ -9,6 +9,7 @@ body,
   height: 100%;
 }
 
+/* handle "leaflet" packege */
 .leaflet-bottom,
 .leaflet-control,
 .leaflet-pane,
