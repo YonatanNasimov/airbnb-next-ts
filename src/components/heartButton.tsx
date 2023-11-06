@@ -3,6 +3,7 @@
 import { SafeUser } from '@/types';
 import React from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import useFavorite from "@/hooks/useFavoriets"
 
 interface HeartButtonProps {
     listingId: string;
@@ -12,8 +13,8 @@ interface HeartButtonProps {
 const HeartButton: React.FC<HeartButtonProps> = ({
     listingId, currentUser
 }) => {
-    const hasFavorited = false;
-    const toggleFavorite = () => { console.log(currentUser?.email) }
+
+    const { hasFavorited, toggleFavorite } = useFavorite({ listingId, currentUser })
 
     return (
         <div
