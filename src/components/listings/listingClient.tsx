@@ -5,7 +5,16 @@ import { Reservation } from '@prisma/client'
 import React, { useMemo } from 'react'
 import { categories } from '../navbar/categories';
 import ListingHead from './listingHead';
+import ListingInfo from './listingInfo';
 import Container from '../container';
+import useLoginModal from '@/hooks/useLoginModal';
+import { useRouter } from 'next/navigation';
+
+const initialDateRange = {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection'
+}
 
 interface ListingClientProps {
     reservation?: Reservation[];
@@ -17,8 +26,12 @@ interface ListingClientProps {
 
 const ListingClient: React.FC<ListingClientProps> = ({
     listing,
-    currentUser
+    currentUser,
+    reservation = []
 }) => {
+
+    const loginModal = useLoginModal()
+    const router = useRouter()
 
     const category = useMemo(() => {
         return categories.find((item) =>
@@ -36,6 +49,17 @@ const ListingClient: React.FC<ListingClientProps> = ({
                         locationValue={listing.locationValue}
                         id={listing.id}
                         currentUser={currentUser} />
+                    <div className='grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6'>
+                        <ListingInfo
+                            user={listing.user}
+                            category={category}
+                            description={listing.description}
+                            roomCount={listing.roomCount}
+                            guestCount={listing.guestCount}
+                            bathroomCount={listing.bathroomCount}
+                            locationValue={listing.locationValue}
+                        />
+                    </div>
                 </div>
             </div>
         </Container>
