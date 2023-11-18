@@ -13,6 +13,8 @@ import { eachDayOfInterval, differenceInCalendarDays } from 'date-fns';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { list } from 'postcss';
+import ListingReservation from './listingReservation';
+import { Range } from 'react-date-range';
 
 const initialDateRange = {
     startDate: new Date(),
@@ -38,6 +40,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     const router = useRouter()
 
     const disabledDates = useMemo(() => {
+        //Checking which dates are already in use
         let dates: Date[] = [];
 
         reservation.forEach((reservation) => {
@@ -54,7 +57,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
     const [isLoading, setIsLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(listing.price);
-    const [dateRange, setDateRange] = useState(initialDateRange);
+    const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
     const OnCreateReservation = useCallback(() => {
         if (!currentUser) {
@@ -126,6 +129,21 @@ const ListingClient: React.FC<ListingClientProps> = ({
                             bathroomCount={listing.bathroomCount}
                             locationValue={listing.locationValue}
                         />
+                        <div
+                            className='
+                            order-first
+                            mb-10
+                            md:order-last
+                            md:col-span-3'>
+                            <ListingReservation
+                                price={listing.price}
+                                totalPrice={totalPrice}
+                                onChangeDate={(value) => setDateRange(value)}
+                                dateRange={dateRange}
+                                onSubmit={OnCreateReservation}
+                                disabled={isLoading}
+                                disabledDates={disabledDates} />
+                        </div>
                     </div>
                 </div>
             </div>
