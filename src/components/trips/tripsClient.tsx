@@ -22,11 +22,12 @@ const TripsClient: React.FC<TripsClientProps> = ({
     currentUser
 }) => {
 
+    const router = useRouter();
+
     useEffect(() => {
         router.refresh()
     }, [])
 
-    const router = useRouter();
     const [deletingId, setDeletingId] = useState('')
 
     const onCancel = useCallback((id: string) => {
@@ -62,7 +63,7 @@ const TripsClient: React.FC<TripsClientProps> = ({
           gap-8
         "
             >
-                {reservations.map((reservation: any) => (
+                {reservations.map((reservation) => (
                     <ListingCard
                         key={reservation.id}
                         data={reservation.listing}

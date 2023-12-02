@@ -46,7 +46,9 @@ const RegisterModal = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
+      toast.success('Created successfuly')
       registerModal.onClose();
+      loginModal.onOpen();
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong, Try again");
@@ -98,13 +100,13 @@ const RegisterModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {signIn("google")}}
+        onClick={() => { signIn("google") }}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => {signIn("github")}}
+        onClick={() => { signIn("github") }}
       />
       <div className="flex flex-row gap-2 items-center justify-center">
         <div>Already have an account? </div>
