@@ -48,7 +48,7 @@ const getListings = async (params: IListingParams) => {
 
         if (startDate && endDate) {
             query.NOT = {
-                reservation: {
+                reservations: {
                     some: {
                         OR: [
                             {
@@ -64,6 +64,7 @@ const getListings = async (params: IListingParams) => {
                 }
             }
         }
+
 
         const listings = await prisma.listing.findMany({
             where: query,
