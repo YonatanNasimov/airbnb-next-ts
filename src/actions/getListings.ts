@@ -46,6 +46,25 @@ const getListings = async (params: IListingParams) => {
             query.locationValue = locationValue;
         }
 
+        if (startDate && endDate) {
+            query.NOT = {
+                reservation: {
+                    some: {
+                        OR: [
+                            {
+                                endDate: { gte: startDate },
+                                startDate: { lte: startDate }
+                            },
+                            {
+                                startDate: { lte: endDate },
+                                endDate: { gte: endDate }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+
         const listings = await prisma.listing.findMany({
             where: query,
             orderBy: {
